@@ -1,11 +1,16 @@
 import csv
 import paramiko
 
+#please input your ip & username & password.
+host ='IP address'
+port ='22'
+username = 'username'
+password = 'password'
+
 client = paramiko.SSHClient()
 client.load_system_host_keys()
 client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-#please change your username & password
-client.connect(hostname='ipaddress', port=22, username='username', password='password')
+client.connect(host,port,username,password)
 
 with open ('VPN.csv','r',encoding='utf8') as csvfile:
     reader = csv.DictReader(csvfile)
