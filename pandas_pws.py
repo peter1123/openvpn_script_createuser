@@ -4,10 +4,13 @@ import secrets
 import paramiko
 import json
 
-host ='ip'
-port ='22'
-username = 'root'
-password = 'password'
+with open("config.json","r") as f:
+    config=json.load(f)
+
+host =config["host"]
+port =config["port"]
+username = config["username"]
+password = config["password"]
 
 client = paramiko.SSHClient()
 client.load_system_host_keys()
