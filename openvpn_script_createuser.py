@@ -1,11 +1,14 @@
 import csv
 import paramiko
+import json
 
-#please input your ip & username & password.
-host ='IP address'
-port ='22'
-username = 'username'
-password = 'password'
+with open("config.json","r") as f:
+    config=json.load(f)
+
+host =config["host"]
+port =config["port"]
+username = config["username"]
+password = config["password"]
 
 client = paramiko.SSHClient()
 client.load_system_host_keys()
