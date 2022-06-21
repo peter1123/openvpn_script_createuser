@@ -23,7 +23,8 @@ stdin, stdout, stderr = client.exec_command(command1)
 currentusr = stdout.read().decode()
 #json格式化
 jcurrentusr = json.loads(currentusr)
-
+#print(jcurrentusr.keys())
+stdin.close()
 
 fPath = 'VPN.csv'
 df = pd.read_csv(fPath)
@@ -31,9 +32,10 @@ x=df.columns.get_loc('password')
 newusr = df['username'].tolist()
 #比较是否存在重复的用户名
 Duplicate_usr=(list(set(newusr)&set(jcurrentusr.keys())))
+#print(Duplicate_usr)
 
 #如果有重复用户名则中断脚本并报错
-if Duplicate_usr==False:
+if Duplicate_usr:
     print('Duplicate username,please check:')
     print(Duplicate_usr)
     exit()
@@ -42,4 +44,5 @@ for r in df.index:
     alphabet = string.ascii_letters + string.digits
     passcode = ''.join(secrets.choice(alphabet) for i in range(8))
     df.iat[r,x]=passcode
-df.to_csv('VPN.csv',index=False)
+    df.to_csv('VPN.csv',index=False)
+
